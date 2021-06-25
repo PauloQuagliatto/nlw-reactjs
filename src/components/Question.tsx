@@ -7,10 +7,10 @@ type QuestionsProps = {
   author: {
     name: string
     avatar: string
-  },
-  children?: ReactNode
+  }
   isAnswered?: boolean
   isHighlighted?: boolean
+  children?: ReactNode
 }
 
 export const Question = ({ content, author, isAnswered = false, isHighlighted = false, children }: QuestionsProps) => {

@@ -1,4 +1,8 @@
 import { useHistory, useParams } from 'react-router-dom'
+import { useState } from 'react'
+
+import { NotAuthorized } from './NotAuthorized'
+import { DeleteModal } from '../components/DeleteModal'
 
 import logoImg from '../assets/images/logo.svg'
 import deleteImg from '../assets/images/delete.svg'
@@ -9,59 +13,64 @@ import { Button } from '../components/Button'
 import { RoomCode } from '../components/RoomCode'
 import { Question } from '../components/Question'
 import { database } from '../firebase/firebase'
-import { useAuth } from '../hooks/useAuth'
 import { useRoom } from '../hooks/useRoom'
+import { useAuth } from '../hooks/useAuth'
+import { useAdmin } from '../hooks/useAdmin'
 
 import '../styles/room.scss'
-import { useState } from 'react'
+
 
 type RoomParams = {
   id: string
 }
 
-
-
 export const AdminRoom = () => {
   const history = useHistory()
-  const { user } = useAuth()
   const params = useParams<RoomParams>()
+  const { user, signOutWithGoogle } = useAuth()
   const roomId = params.id
   const { title, questions } = useRoom(roomId)
-  
-  const handleEndRoom = async () => {
-    await database.ref(`rooms/${roomId}`).update({
-      closedAt: new Date()
-    })
+  const [isOpen, setIsOpen] = useState(false)
+  const { isAdmin } = useAdmin(roomId)
 
+  const goHome = () => {
     history.push('/')
+  }
+
+  const handleLogOut = async () => {
+    await signOutWithGoogle()
+    goHome()
   }
 
   const handleCheckQuestionAsAnswered = async (questionId: string, isAnswered: boolean) => {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isAnswered: !isAnswered
     })
-
   }
   const handleHighLightQuestion = async (questionId: string, isHighlighted: boolean) => {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isHighlighted: !isHighlighted
     })
-    
-  }
 
-  const handleDeleteQuestion = async (questionId: string) => {
-    if (window.confirm('Tem certeza que quer deletar esta pergunta?')) {
-      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
-    }
   }
+  
   return (
+    <>
+    { isAdmin ? 
     <div id="page-room">
       <header>
         <div className="content">
-          <img src={logoImg} alt="letmeask-logo" />
+          <img src={logoImg} alt="letmeask-logo" onClick={goHome} />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined onClick={handleEndRoom}>Encerrar Sala</Button>
+            <Button isOutlined onClick={() => setIsOpen(true)}>Encerrar Sala</Button>
+            <DeleteModal 
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  whatIsDoing={'endRoom'}
+                  roomId={roomId}
+                />
+                <Button onClick={handleLogOut}>Log Out</Button>
           </div>
         </div>
       </header>
@@ -86,27 +95,35 @@ export const AdminRoom = () => {
                   type="button"
                   onClick={() => handleCheckQuestionAsAnswered(question.id, question.isAnswered)}
                 >
-                  <img src={checkImg} alt="delete image" />
+                  <img src={checkImg} alt="check" />
                 </button>
                 {!question.isAnswered && (
                   <button
                     type="button"
                     onClick={() => handleHighLightQuestion(question.id, question.isHighlighted)}
-                  ><img src={answerImg} alt="delete image" />
+                  ><img src={answerImg} alt="answer" />
                   </button>
                 )}
 
                 <button
                   type="button"
-                  onClick={() => handleDeleteQuestion(question.id)}
+                  onClick={() => setIsOpen(true)}
                 >
-                  <img src={deleteImg} alt="delete image" />
+                  <DeleteModal 
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  whatIsDoing={'deleteQuestion'}
+                  roomId={roomId}
+                  questionId={question.id}
+                />  
+                  <img src={deleteImg} alt="delete" />
                 </button>
               </Question>
             )
           })}
         </div>
       </main>
-    </div>
+    </div> : <NotAuthorized />}
+    </>
   )
 }

@@ -2,17 +2,18 @@ import { createContext, useEffect, useState, ReactNode } from 'react'
 import { firebase, auth } from '../firebase/firebase'
 
 type User = {
-  id: string;
-  name: string;
-  avatar: string;
+  id: string
+  name: string
+  avatar: string
 }
 
 type AuthContextType = {
-  user: User | undefined;
-  signInWithGoogle: () => Promise<void>;
+  user: User | undefined
+  signInWithGoogle: () => Promise<void>
+  signOutWithGoogle: () => Promise<void>
 }
 type AuthContextProviderProps = {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -45,23 +46,29 @@ export const AuthContextProvider = (props: AuthContextProviderProps) => {
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     const result = await auth.signInWithPopup(provider)
-      if (result.user) {
-        const { displayName, photoURL, uid } = result.user
+    if (result.user) {
+      const { displayName, photoURL, uid } = result.user
 
-        if (!displayName || !photoURL) {
-          throw new Error('Faltando informações da conta google.')
-        }
-
-        setUser({
-          id: uid,
-          name: displayName,
-          avatar: photoURL
-        })
+      if (!displayName || !photoURL) {
+        throw new Error('Faltando informações da conta google.')
       }
+
+      setUser({
+        id: uid,
+        name: displayName,
+        avatar: photoURL
+      })
+    }
   }
-  
-  return(
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+
+  const signOutWithGoogle = async () => {
+    await auth.signOut()
+
+    setUser(undefined)
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOutWithGoogle }}>
       {props.children}
     </AuthContext.Provider>
   )

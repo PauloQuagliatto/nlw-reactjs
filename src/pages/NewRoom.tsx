@@ -24,7 +24,7 @@ export const NewRoom = () => {
      authorId: user?.id
     })
 
-    history.push(`/rooms/${firebaseRoom.key}`)
+    history.push(`/admin/rooms/${firebaseRoom.key}`)
   }
   return (
     <div id="page-auth">
@@ -40,7 +40,7 @@ export const NewRoom = () => {
           <form onSubmit={handleCreateRoom} >
             <input
               type="text"
-              placeholder="Digite o código da sala"
+              placeholder="Digite o nome da sala"
               onChange={e => setNewRoom(e.target.value)}
               value={newRoom}
             />

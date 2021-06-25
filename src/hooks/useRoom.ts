@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { useAuth } from './useAuth'
 import { database } from "../firebase/firebase"
 
-
 type QuestionType = {
   id: string
   author: {
@@ -34,7 +33,7 @@ export const useRoom = (roomId: string) => {
   const { user } = useAuth()
   const [questions, setQuestions] = useState<QuestionType[]>([])
   const [title, setTitle] = useState('')
-  
+  const [isAdmin, setIsAdmin] = useState(false)
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`)
 
@@ -56,6 +55,7 @@ export const useRoom = (roomId: string) => {
       setTitle(databaseRoom.title)
       setQuestions(parsedQuestions)
 
+      setIsAdmin(databaseRoom.authorId === user?.id)
     })
 
     return () => {
@@ -63,5 +63,5 @@ export const useRoom = (roomId: string) => {
     }
   }, [roomId, user?.id])
 
-  return { questions, title }
+  return { questions, title, isAdmin }
 }

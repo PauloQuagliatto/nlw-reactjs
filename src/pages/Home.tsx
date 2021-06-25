@@ -35,7 +35,8 @@ const handleJoinRoom = async (e: FormEvent) => {
   const roomRef = await database.ref(`rooms/${roomCode}`).get()
 
   if(!roomRef.exists()) return alert('Room does not exist!')
-
+  if(roomRef.val().closedAt) return alert('Room already closed.')
+  
   history.push(`/rooms/${roomCode}`)
 }
 

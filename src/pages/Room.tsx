@@ -22,6 +22,7 @@ export const Room = () => {
   const { user } = useAuth()
   const history = useHistory()
   const params = useParams<RoomParams>()
+  const { signOutWithGoogle } = useAuth()
   const roomId = params.id
   const [newQuestion, setNewQuestion] = useState('')
   const { title, questions } = useRoom(roomId)
@@ -31,6 +32,10 @@ export const Room = () => {
     history.push('/')
   }
 
+  const handleLogOut = async () => {
+    await signOutWithGoogle()
+    goHome()
+  }
   const handleSendQuestion = async (e: FormEvent) => {
     e.preventDefault()
 
@@ -66,6 +71,7 @@ export const Room = () => {
         <div className="content">
           <img src={logoImg} alt="letmeask-logo" onClick={goHome} />
           <RoomCode code={roomId} />
+          <Button onClick={handleLogOut}>Log Out</Button>
         </div>
       </header>
 

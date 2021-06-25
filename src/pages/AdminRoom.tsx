@@ -27,7 +27,7 @@ type RoomParams = {
 export const AdminRoom = () => {
   const history = useHistory()
   const params = useParams<RoomParams>()
-  const { user, signOutWithGoogle } = useAuth()
+  const { signOutWithGoogle } = useAuth()
   const roomId = params.id
   const { title, questions } = useRoom(roomId)
   const [isOpen, setIsOpen] = useState(false)

@@ -104,7 +104,7 @@ export const DeleteModal = ({ isOpen, setIsOpen, whatIsDoing, roomId, questionId
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={!!isOpen}
       onRequestClose={handleCloseModal}
       style={{
         overlay: {

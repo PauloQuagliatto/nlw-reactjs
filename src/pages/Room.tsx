@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import logoImg from '../assets/images/logo.svg'
 
+import { LogOutButton } from '../components/LogOutButton'
 import { Button } from '../components/Button'
 import { RoomCode } from '../components/RoomCode'
 import { Question } from '../components/Question'
@@ -70,8 +71,10 @@ export const Room = () => {
       <header>
         <div className="content">
           <img src={logoImg} alt="letmeask-logo" onClick={goHome} />
-          <RoomCode code={roomId} />
-          <Button onClick={handleLogOut}>Log Out</Button>
+          <div>
+            <RoomCode code={roomId} />
+            <LogOutButton onClick={handleLogOut}>Log Out</LogOutButton>
+          </div>
         </div>
       </header>
 

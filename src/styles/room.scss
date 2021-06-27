@@ -18,9 +18,15 @@
       > div {
         display: flex;
         gap: 16px;
-        
+        @media (max-width: 785px) {
+          gap: 2px;
+        }
         button {
           height: 40px;
+          cursor: pointer;
+          @media (max-width: 785px) {
+            height: 35px;
+          }
         }
       }
     }
@@ -29,7 +35,9 @@
   main {
     max-width: 800px;
     margin: 0 auto;
-
+    @media (max-width: 825px) {
+      margin: 0 40px;
+    }
     .room-title {
       margin: 32px 0 24px;
       display: flex;
@@ -87,7 +95,7 @@
           }
         }
 
-        >span {
+        > span {
           font-size: 14px;
           color: #737380;
           font-weight: 500;
@@ -103,9 +111,39 @@
           }
         }
       }
-      
+
       .question-list {
         margin-top: 32px;
+      }
+    }
+    .room-warning {
+      margin: 32px 0 24px;
+      display: flex;
+      align-items:center;
+
+      h1 {
+        font-family: "Poppins", sans-serif;
+        font-size: 24px;
+        color: #29292e;
+      }
+
+      button {
+        height: 50px;
+        border-radius: 8px;
+        font-weight: 500;
+        background: #835afd;
+        color: #fff;
+        padding: 0 32px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+        border: 0;
+        transition: filter 0.2s;
+
+        filter: brightness(0.9);
       }
     }
   }

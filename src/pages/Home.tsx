@@ -20,25 +20,25 @@ export const Home = () => {
   const [roomCode, setRoomCode] = useState('')
 
   const handleCreateRoom = async () => {
-    if(!user){
+    if (!user) {
       await signInWithGoogle()
     }
-    
+
     history.push('rooms/new')
   }
 
-const handleJoinRoom = async (e: FormEvent) => {
-  e.preventDefault()
+  const handleJoinRoom = async (e: FormEvent) => {
+    e.preventDefault()
 
-  if(roomCode.trim() === '') return
+    if (roomCode.trim() === '') return
 
-  const roomRef = await database.ref(`rooms/${roomCode}`).get()
+    const roomRef = await database.ref(`rooms/${roomCode}`).get()
 
-  if(!roomRef.exists()) return alert('Room does not exist!')
-  if(roomRef.val().closedAt) return alert('Room already closed.')
-  
-  history.push(`/rooms/${roomCode}`)
-}
+    if (!roomRef.exists()) return alert('Room does not exist!')
+    if (roomRef.val().closedAt) return alert('Room already closed.')
+
+    history.push(`/rooms/${roomCode}`)
+  }
 
   return (
     <div id="page-auth">
@@ -50,6 +50,10 @@ const handleJoinRoom = async (e: FormEvent) => {
       <main>
         <div className="main-content">
           <img src={logoImg} alt="Let Me Ask Logo" />
+          <div className="show-for-mobile">
+            <strong>Crie Salas de Q&amp;A ao vivo</strong>
+            <p>Tire dúvidas da sua audiência em tempo real.</p>
+          </div>
           <button onClick={handleCreateRoom} className="create-room">
             <img src={googleImg} alt="Logo da Google" />
             Crie sua sala com o Google

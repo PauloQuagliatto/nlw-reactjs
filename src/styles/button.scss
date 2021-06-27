@@ -6,12 +6,19 @@
   color: #fff;
   padding: 0 32px;
 
+  
+
   display: flex;
   justify-content: center;
   align-items: center;
 
   cursor: pointer;
   border: 0;
+  @media(max-width: 785px){
+    height: 30px;
+    width: 85px;
+    font-size: 12px;
+  }
 
   transition: filter 0.2s;
   img {
@@ -22,6 +29,13 @@
     background: #fff;
     border: 1px solid #835afd;
     color: #835afd;
+    
+    transition: background 0.2s, color 0.2s;
+
+    &:hover{
+      background: #835afd;
+      color: #fff;  
+    }
   }
 
   &:not(:disabled)hover {

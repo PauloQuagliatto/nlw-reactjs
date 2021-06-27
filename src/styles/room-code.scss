@@ -3,6 +3,11 @@
   border-radius: 8px;
   overflow: hidden;
 
+  @media (max-width: 800px) {
+    height: 35px;
+    width: 240px;
+  }
+  
   background: #fff;
   border: 1px solid #835afd;
   cursor: pointer;

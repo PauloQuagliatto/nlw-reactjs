@@ -2,6 +2,12 @@
   display: flex;
   align-items: stretch;
   height: 100vh;
+
+  @media (max-width: 785px) {
+    justify-content:center;
+    align-items: center;
+  }
+
   aside {
     flex: 7;
 
@@ -29,7 +35,11 @@
       margin-top: 16px;
       color: #f8f8f8;
     }
+    @media (max-width: 785px) {
+      display: none;
+    }
   }
+
   main {
     flex: 8;
 
@@ -51,10 +61,15 @@
     > img {
       align-self: center;
     }
+    .show-for-mobile {
+      @media(min-width: 785px){
+        display: none;
+      }
+    }
     h2 {
       font-size: 24px;
       margin: 64px 0 24px;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
     }
 
     form {
@@ -79,7 +94,7 @@
       font-size: 14px;
       color: #737380;
       margin-top: 16px;
-      
+
       a {
         color: #e559f9;
       }
@@ -132,4 +147,5 @@
       margin-left: 16px;
     }
   }
+  
 }

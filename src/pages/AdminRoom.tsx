@@ -9,6 +9,7 @@ import deleteImg from '../assets/images/delete.svg'
 import checkImg from '../assets/images/check.svg'
 import answerImg from '../assets/images/answer.svg'
 
+import { LogOutButton } from '../components/LogOutButton'
 import { Button } from '../components/Button'
 import { RoomCode } from '../components/RoomCode'
 import { Question } from '../components/Question'
@@ -70,7 +71,7 @@ export const AdminRoom = () => {
                   whatIsDoing={'endRoom'}
                   roomId={roomId}
                 />
-                <Button onClick={handleLogOut}>Log Out</Button>
+                <LogOutButton onClick={handleLogOut}>Log Out</LogOutButton>
           </div>
         </div>
       </header>
@@ -79,7 +80,6 @@ export const AdminRoom = () => {
         <div className="room-title">
           <h1>Sala {title}</h1>
           {questions.length > 0 && <span>{questions.length} Pergunta(s)</span>}
-
         </div>
         <div className="question-list" >
           {questions.map(question => {

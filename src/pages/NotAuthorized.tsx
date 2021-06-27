@@ -2,8 +2,6 @@ import { useHistory } from 'react-router-dom'
 
 import logoImg from '../assets/images/logo.svg'
 
-import { Button } from '../components/Button'
-
 import '../styles/room.scss'
 
 export const NotAuthorized = () => {
@@ -25,9 +23,13 @@ export const NotAuthorized = () => {
       </header>
 
       <main>
-        <div className="room-title">
+        <div className="room-warning">
+          <div>
           <h1>Você não está autorizado a entrar nesta sala</h1>
-          <Button isOutlined={false} onClick={goHome}>Voltar à Página Inicial</Button>
+          </div>
+          <div>
+          <button onClick={goHome}>Página Inicial</button>
+          </div>
         </div>
       </main>
     </div>

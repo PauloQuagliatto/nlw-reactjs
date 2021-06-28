@@ -6,8 +6,6 @@ import './firebase/firebase'
 import './styles/globals.scss'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 )
